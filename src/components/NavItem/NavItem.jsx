@@ -15,7 +15,7 @@ function NavItem({ to, children, activeStyle }) {
 NavItem.propTypes = {
 	to: PropTypes.string.isRequired,
 	children: PropTypes.node.isRequired,
-	activeStyle: PropTypes.object,
+	activeStyle: PropTypes.string,
 }
 
 export default NavItem

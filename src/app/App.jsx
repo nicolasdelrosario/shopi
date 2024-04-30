@@ -1,13 +1,16 @@
 import { BrowserRouter } from 'react-router-dom'
+import { ShoppingCartProvider } from '../context'
 import AppRoutes from '../routes/AppRoutes'
 import AppUI from './AppUI'
 
 function App() {
 	return (
-		<BrowserRouter>
-			<AppRoutes />
-			<AppUI />
-		</BrowserRouter>
+		<ShoppingCartProvider>
+			<BrowserRouter>
+				<AppRoutes />
+				<AppUI />
+			</BrowserRouter>
+		</ShoppingCartProvider>
 	)
 }
 

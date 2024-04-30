@@ -1,8 +1,11 @@
+import { useContext } from 'react'
+import { ShoppingCartContext } from '../../context'
 import NavItem from '../NavItem'
 
 function Navbar() {
-	const activeStyle = 'underline underline-offset-4'
+	const { count } = useContext(ShoppingCartContext)
 
+	const activeStyle = 'underline underline-offset-4'
 	return (
 		<nav className='fixed left-0 top-0 z-10 flex w-full items-center justify-between px-8 py-5 text-sm font-normal'>
 			<ul className='flex items-center gap-3'>
@@ -57,7 +60,7 @@ function Navbar() {
 						Sign in
 					</NavItem>
 				</li>
-				<li>icon 0</li>
+				<li>icon {count}</li>
 			</ul>
 		</nav>
 	)

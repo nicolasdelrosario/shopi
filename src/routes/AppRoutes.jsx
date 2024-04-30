@@ -2,7 +2,7 @@ import { useRoutes } from 'react-router-dom'
 import { Home, MyAccount, MyOrder, MyOrders, NotFound, SignIn } from '../pages'
 
 function AppRoutes() {
-	const ROUTES = useRoutes([
+	const ROUTER = useRoutes([
 		{
 			path: '/',
 			element: <Home />,
@@ -29,7 +29,7 @@ function AppRoutes() {
 		},
 	])
 
-	return ROUTES
+	return ROUTER
 }
 
 export default AppRoutes
