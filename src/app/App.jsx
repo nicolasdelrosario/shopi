@@ -1,15 +1,10 @@
-import { BrowserRouter } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
 import { ShoppingCartProvider } from '../context'
-import AppRoutes from '../routes/AppRoutes'
-import AppUI from './AppUI'
-
+import appRouter from '../routes/AppRouter'
 function App() {
 	return (
 		<ShoppingCartProvider>
-			<BrowserRouter>
-				<AppRoutes />
-				<AppUI />
-			</BrowserRouter>
+			<RouterProvider router={appRouter}></RouterProvider>
 		</ShoppingCartProvider>
 	)
 }

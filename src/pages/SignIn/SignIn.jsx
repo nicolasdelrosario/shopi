@@ -1,7 +1,12 @@
-import { Layout } from '../../components'
+import { Layout, Navbar } from '../../components'
 
 function SignIn() {
-	return <Layout>Singin</Layout>
+	return (
+		<>
+			<Navbar />
+			<Layout>Singin</Layout>
+		</>
+	)
 }
 
 export default SignIn
