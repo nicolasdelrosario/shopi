@@ -1,9 +1,8 @@
-import { Layout, Navbar } from '../../components'
+import { Layout } from '../../components'
 
 function SignIn() {
 	return (
 		<>
-			<Navbar />
 			<Layout>Singin</Layout>
 		</>
 	)

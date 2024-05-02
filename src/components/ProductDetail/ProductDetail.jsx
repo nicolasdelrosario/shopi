@@ -5,7 +5,6 @@ import { ShoppingCartContext } from '../../context'
 function ProductDetail() {
 	const { isProductDetailOpen, closeProductDetail, productToShow } =
 		useContext(ShoppingCartContext)
-	console.log(productToShow)
 
 	return (
 		<aside
@@ -29,8 +28,9 @@ function ProductDetail() {
 			<p className='flex flex-col p-6'>
 				<span className='text-2xl font-medium'>{`$${productToShow.price}`}</span>
 				<span className='text-md font-medium'>{productToShow.title}</span>
-				{/* description */}
-				<span className='text-sm font-light'>{productToShow.category}</span>
+				<span className='mt-2 text-sm font-light'>
+					{productToShow.description}
+				</span>
 			</p>
 		</aside>
 	)
