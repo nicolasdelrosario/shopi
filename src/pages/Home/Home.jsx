@@ -1,5 +1,5 @@
 import { useFetch } from '../../hooks/useFetch'
-import { Layout, Card, Navbar } from '../../components'
+import { Layout, Card, Navbar, ProductDetail } from '../../components'
 
 function Home() {
 	const products = useFetch('https://fakestoreapi.com/products')
@@ -13,6 +13,7 @@ function Home() {
 						<Card key={product.id} {...product} />
 					))}
 				</div>
+				<ProductDetail />
 			</Layout>
 		</>
 	)
