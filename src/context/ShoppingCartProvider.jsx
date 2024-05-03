@@ -7,6 +7,7 @@ export function ShoppingCartProvider({ children }) {
 	// Shooping Cart - Increment Quantity
 	const [count, setCount] = useState(0)
 	const increment = () => setCount(count + 1)
+	const decrement = () => setCount(count - 1)
 
 	// Product Detail - Open/Close
 	const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
@@ -34,6 +35,14 @@ export function ShoppingCartProvider({ children }) {
 		openCheckoutSideMenu()
 		setCardProducts([...cardProducts, productData])
 	}
+	const deleteProductToCart = id => {
+		decrement()
+		const filteredProduct = cardProducts.filter(product => product.id !== id)
+		setCardProducts(filteredProduct)
+	}
+
+	// Shopping Cart - Checkout
+	const [order, setOrder] = useState([])
 
 	return (
 		<ShoppingCartContext.Provider
@@ -47,6 +56,7 @@ export function ShoppingCartProvider({ children }) {
 				showProduct,
 				cardProducts,
 				addProductsToCart,
+				deleteProductToCart,
 				isCheckoutSideMenuOpen,
 				openCheckoutSideMenu,
 				closeCheckoutSideMenu,

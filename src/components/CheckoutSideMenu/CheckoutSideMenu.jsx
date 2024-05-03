@@ -1,9 +1,11 @@
 import { useContext } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { ShoppingCartContext } from '../../context'
+import { OrderCard } from '../index'
+import { totalPrice } from '../../utils'
 
 function CheckoutSideMenu() {
-	const { isCheckoutSideMenuOpen, closeCheckoutSideMenu } =
+	const { isCheckoutSideMenuOpen, closeCheckoutSideMenu, cardProducts } =
 		useContext(ShoppingCartContext)
 
 	return (
@@ -17,6 +19,25 @@ function CheckoutSideMenu() {
 					className='h-6 w-6 cursor-pointer text-black'
 					onClick={() => closeCheckoutSideMenu()}
 				/>
+			</div>
+			<div className='overflow-y-scroll px-6'>
+				{cardProducts.map(product => (
+					<OrderCard
+						key={product.id}
+						id={product.id}
+						title={product.title}
+						imageUrl={product.image}
+						price={product.price}
+					/>
+				))}
+			</div>
+			<div className='px-6'>
+				<p className='flex items-center justify-between'>
+					<span className='font-light'>Total: </span>
+					<span className='text-xl font-medium'>
+						${totalPrice(cardProducts)}
+					</span>
+				</p>
 			</div>
 		</aside>
 	)

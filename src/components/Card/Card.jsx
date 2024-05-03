@@ -1,10 +1,42 @@
 import { useContext } from 'react'
 import PropTypes from 'prop-types'
-import { PlusIcon } from '@heroicons/react/24/solid'
+import { PlusIcon, CheckIcon } from '@heroicons/react/24/solid'
 import { ShoppingCartContext } from '../../context'
 
-function Card({ title, price, category, image, description }) {
-	const { addProductsToCart, showProduct } = useContext(ShoppingCartContext)
+function Card(props) {
+	const { id, title, price, category, image, description } = props
+	const { addProductsToCart, showProduct, cardProducts } =
+		useContext(ShoppingCartContext)
+
+	const renderIcon = () => {
+		const isInCart = cardProducts.some(product => product.title === title)
+
+		if (isInCart) {
+			return (
+				<button className='absolute right-0 top-0 m-2 flex h-6 w-6 items-center justify-center rounded-full bg-green-600 p-1'>
+					<CheckIcon className='h-6 w-6 text-white' />
+				</button>
+			)
+		} else {
+			return (
+				<button
+					className='absolute right-0 top-0 m-2 flex h-6 w-6 items-center justify-center rounded-full bg-neutral-100 p-1'
+					onClick={event =>
+						addProductsToCart(event, {
+							id,
+							title,
+							price,
+							category,
+							image,
+							description,
+						})
+					}
+				>
+					<PlusIcon className='h-6 w-6 text-black' />
+				</button>
+			)
+		}
+	}
 
 	return (
 		<article
@@ -22,20 +54,7 @@ function Card({ title, price, category, image, description }) {
 					src={image}
 					alt={title}
 				/>
-				<button
-					className='absolute right-0 top-0 m-2 flex h-6 w-6 items-center justify-center rounded-full bg-white p-1'
-					onClick={event =>
-						addProductsToCart(event, {
-							title,
-							price,
-							category,
-							image,
-							description,
-						})
-					}
-				>
-					<PlusIcon className='h-6 w-6 text-black' />
-				</button>
+				{renderIcon()}
 			</figure>
 			<p className='flex justify-between'>
 				<span className='mr-2 truncate text-sm font-light'>{title}</span>
@@ -46,6 +65,7 @@ function Card({ title, price, category, image, description }) {
 }
 
 Card.propTypes = {
+	id: PropTypes.number.isRequired,
 	price: PropTypes.number.isRequired,
 	title: PropTypes.string.isRequired,
 	category: PropTypes.string.isRequired,
