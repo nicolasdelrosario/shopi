@@ -5,11 +5,11 @@ import { ShoppingCartContext } from '../../context'
 
 function Card(props) {
 	const { id, title, price, category, image, description } = props
-	const { addProductsToCart, showProduct, cardProducts } =
+	const { addProductsToCart, showProduct, cartProducts } =
 		useContext(ShoppingCartContext)
 
 	const renderIcon = () => {
-		const isInCart = cardProducts.some(product => product.title === title)
+		const isInCart = cartProducts.some(product => product.title === title)
 
 		if (isInCart) {
 			return (

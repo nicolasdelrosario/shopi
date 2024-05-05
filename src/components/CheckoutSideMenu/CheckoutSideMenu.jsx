@@ -1,12 +1,17 @@
 import { useContext } from 'react'
+import { Link } from 'react-router-dom'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { ShoppingCartContext } from '../../context'
 import { OrderCard } from '../index'
 import { totalPrice } from '../../utils'
 
 function CheckoutSideMenu() {
-	const { isCheckoutSideMenuOpen, closeCheckoutSideMenu, cardProducts } =
-		useContext(ShoppingCartContext)
+	const {
+		isCheckoutSideMenuOpen,
+		closeCheckoutSideMenu,
+		cartProducts,
+		handleCheckout,
+	} = useContext(ShoppingCartContext)
 
 	return (
 		<aside
@@ -20,8 +25,8 @@ function CheckoutSideMenu() {
 					onClick={() => closeCheckoutSideMenu()}
 				/>
 			</div>
-			<div className='overflow-y-scroll px-6'>
-				{cardProducts.map(product => (
+			<div className='flex-1 overflow-y-scroll px-6'>
+				{cartProducts.map(product => (
 					<OrderCard
 						key={product.id}
 						id={product.id}
@@ -35,9 +40,17 @@ function CheckoutSideMenu() {
 				<p className='flex items-center justify-between'>
 					<span className='font-light'>Total: </span>
 					<span className='text-xl font-medium'>
-						${totalPrice(cardProducts)}
+						${totalPrice(cartProducts)}
 					</span>
 				</p>
+				<Link to='/my-orders/last'>
+					<button
+						className='mb-6 mt-3 w-full rounded-lg bg-black py-3 text-white'
+						onClick={() => handleCheckout()}
+					>
+						Checkout
+					</button>
+				</Link>
 			</div>
 		</aside>
 	)

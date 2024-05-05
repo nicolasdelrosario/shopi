@@ -1,5 +1,6 @@
 import { createContext, useState } from 'react'
 import PropTypes from 'prop-types'
+import { totalPrice } from '../utils'
 
 export const ShoppingCartContext = createContext()
 
@@ -27,22 +28,34 @@ export function ShoppingCartProvider({ children }) {
 	}
 
 	// Shopping Cart - Add Product to cart
-	const [cardProducts, setCardProducts] = useState([])
+	const [cartProducts, setCartProducts] = useState([])
 	const addProductsToCart = (event, productData) => {
 		event.stopPropagation()
 		increment()
 		closeProductDetail()
 		openCheckoutSideMenu()
-		setCardProducts([...cardProducts, productData])
+		setCartProducts([...cartProducts, productData])
 	}
 	const deleteProductToCart = id => {
 		decrement()
-		const filteredProduct = cardProducts.filter(product => product.id !== id)
-		setCardProducts(filteredProduct)
+		const filteredProduct = cartProducts.filter(product => product.id !== id)
+		setCartProducts(filteredProduct)
 	}
 
 	// Shopping Cart - Checkout
 	const [order, setOrder] = useState([])
+	const handleCheckout = () => {
+		const orderToAdd = {
+			date: new Date(),
+			products: cartProducts,
+			totalProducts: cartProducts.length,
+			totalPrice: totalPrice(cartProducts),
+		}
+
+		setOrder([...order, orderToAdd])
+		setCount(0)
+		setCartProducts([])
+	}
 
 	return (
 		<ShoppingCartContext.Provider
@@ -54,12 +67,14 @@ export function ShoppingCartProvider({ children }) {
 				closeProductDetail,
 				productToShow,
 				showProduct,
-				cardProducts,
+				cartProducts,
 				addProductsToCart,
 				deleteProductToCart,
 				isCheckoutSideMenuOpen,
 				openCheckoutSideMenu,
 				closeCheckoutSideMenu,
+				order,
+				handleCheckout,
 			}}
 		>
 			{children}

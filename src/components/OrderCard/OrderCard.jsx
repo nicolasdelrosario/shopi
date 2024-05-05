@@ -4,7 +4,7 @@ import { XMarkIcon } from '@heroicons/react/24/solid'
 import { ShoppingCartContext } from '../../context'
 
 function OrderCard(props) {
-	const { id, title, imageUrl, price } = props
+	const { id, title, imageUrl, price, deleteCard = true } = props
 
 	const { deleteProductToCart } = useContext(ShoppingCartContext)
 
@@ -22,10 +22,12 @@ function OrderCard(props) {
 			</div>
 			<div className='flex items-center gap-2'>
 				<p className='text-md font-medium'>{`$${price}`}</p>
-				<XMarkIcon
-					onClick={() => deleteProductToCart(id)}
-					className='h-6 w-6 cursor-pointer text-black'
-				/>
+				{deleteCard && (
+					<XMarkIcon
+						onClick={() => deleteProductToCart(id)}
+						className='h-6 w-6 cursor-pointer text-black'
+					/>
+				)}
 			</div>
 		</div>
 	)
@@ -36,6 +38,7 @@ OrderCard.propTypes = {
 	title: PropTypes.string.isRequired,
 	imageUrl: PropTypes.string.isRequired,
 	price: PropTypes.number.isRequired,
+	deleteCard: PropTypes.bool,
 }
 
 export default OrderCard

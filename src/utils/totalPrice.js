@@ -9,7 +9,7 @@ function totalPrice(products) {
 	products.forEach(product => {
 		total += product.price
 	})
-	return total
+	return total.toFixed(2)
 }
 
 export default totalPrice
