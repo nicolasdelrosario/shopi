@@ -7,22 +7,68 @@ export const ShoppingCartContext = createContext()
 
 export function ShoppingCartProvider({ children }) {
 	// Get Products
-	const products = useFetch('https://fakestoreapi.com/products')
+	const products = useFetch('https://fakestoreapi.com/products/')
 	const [filteredProducts, setFilteredProducts] = useState(null)
 
 	// Get Products By Title
-	const [searchByTitle, setSearchByTitle] = useState('')
+	const [searchByTitle, setSearchByTitle] = useState(null)
 
-	const filteredItemsByTitle = (items, searchByTitle) => {
-		return items?.filter(item =>
-			item.title.toLowerCase().includes(searchByTitle.toLowerCase())
+	// Get Products By Category
+	const [searchByCategory, setSearchByCategory] = useState(null)
+
+	// Filters Products By Title
+	const filteredProductsByTitle = (products, searchByTitle) => {
+		return products?.filter(product =>
+			product.title.toLowerCase().includes(searchByTitle.toLowerCase())
 		)
 	}
 
+	// Filters Products By Category
+	const filteredProductsByCategory = (products, searchByCategory) => {
+		return products?.filter(product =>
+			product.category.toLowerCase().includes(searchByCategory.toLowerCase())
+		)
+	}
+
+	// Filters By
+	const filterBy = (searchType, products, searchByTitle, searchByCategory) => {
+		if (searchType === 'BY_TITLE') {
+			return filteredProductsByTitle(products, searchByTitle)
+		}
+
+		if (searchType === 'BY_CATEGORY') {
+			return filteredProductsByCategory(products, searchByCategory)
+		}
+
+		if (searchType === 'BY_TITLE_AND_CATEGORY') {
+			return filteredProductsByCategory(products, searchByCategory).filter(
+				product =>
+					product.title.toLowerCase().includes(searchByTitle.toLowerCase())
+			)
+		}
+	}
+
 	useEffect(() => {
-		if (searchByTitle)
-			setFilteredProducts(filteredItemsByTitle(products, searchByTitle))
-	}, [products, searchByTitle])
+		if (searchByTitle && searchByCategory)
+			setFilteredProducts(
+				filterBy(
+					'BY_TITLE_AND_CATEGORY',
+					products,
+					searchByTitle,
+					searchByCategory
+				)
+			)
+		if (searchByTitle && !searchByCategory)
+			setFilteredProducts(
+				filterBy('BY_TITLE', products, searchByTitle, searchByCategory)
+			)
+		if (!searchByTitle && searchByCategory)
+			setFilteredProducts(
+				filterBy('BY_CATEGORY', products, searchByTitle, searchByCategory)
+			)
+		if (!searchByTitle && !searchByCategory) setFilteredProducts(products)
+		// eslint-disable-next-line
+	}, [products, searchByTitle, searchByCategory])
 
 	// Shooping Cart - Increment Quantity
 	const [count, setCount] = useState(0)
@@ -83,6 +129,8 @@ export function ShoppingCartProvider({ children }) {
 				searchByTitle,
 				setSearchByTitle,
 				filteredProducts,
+				searchByCategory,
+				setSearchByCategory,
 				count,
 				setCount,
 				isProductDetailOpen,

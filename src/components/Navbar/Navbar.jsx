@@ -5,7 +5,7 @@ import { ShoppingCartContext } from '../../context'
 import { NavItem, CheckoutSideMenu } from '../../components'
 
 function Navbar() {
-	const { count } = useContext(ShoppingCartContext)
+	const { count, setSearchByCategory } = useContext(ShoppingCartContext)
 
 	const activeStyle = 'underline underline-offset-4'
 	return (
@@ -21,28 +21,39 @@ function Navbar() {
 						</NavItem>
 					</li>
 					<li>
-						<NavItem to='/clothes' activeStyle={activeStyle}>
-							Clothes
-						</NavItem>
-					</li>
-					<li>
-						<NavItem to='/electronics' activeStyle={activeStyle}>
+						<NavItem
+							to='/electronics'
+							activeStyle={activeStyle}
+							onClick={() => setSearchByCategory('electronics')}
+						>
 							Electronics
 						</NavItem>
 					</li>
 					<li>
-						<NavItem to='/furnitures' activeStyle={activeStyle}>
-							Furnitures
+						<NavItem
+							to='/jewelery'
+							activeStyle={activeStyle}
+							onClick={() => setSearchByCategory('jewelery')}
+						>
+							Jewelery
 						</NavItem>
 					</li>
 					<li>
-						<NavItem to='/toys' activeStyle={activeStyle}>
-							Toys
+						<NavItem
+							to='/men-clothing'
+							activeStyle={activeStyle}
+							onClick={() => setSearchByCategory(`men's clothing`)}
+						>
+							Men
 						</NavItem>
 					</li>
 					<li>
-						<NavItem to='/others' activeStyle={activeStyle}>
-							Others
+						<NavItem
+							to='/women-clothing'
+							activeStyle={activeStyle}
+							onClick={() => setSearchByCategory(`women's clothing`)}
+						>
+							Women
 						</NavItem>
 					</li>
 				</ul>

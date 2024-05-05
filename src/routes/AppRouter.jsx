@@ -22,6 +22,26 @@ const appRouter = createBrowserRouter([
 				element: <Home />,
 			},
 			{
+				path: 'all',
+				element: <Home />,
+			},
+			{
+				path: 'electronics',
+				element: <Home />,
+			},
+			{
+				path: 'jewelery',
+				element: <Home />,
+			},
+			{
+				path: 'men-clothing',
+				element: <Home />,
+			},
+			{
+				path: 'women-clothing',
+				element: <Home />,
+			},
+			{
 				path: 'my-account',
 				element: <MyAccount />,
 			},
