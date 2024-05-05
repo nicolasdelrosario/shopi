@@ -13,10 +13,16 @@ function Navbar() {
 			<nav className='fixed left-0 top-0 z-10 flex w-full items-center justify-between bg-white px-8 py-5 text-sm font-normal'>
 				<ul className='flex items-center gap-3'>
 					<li className='text-lg font-semibold'>
-						<NavItem to='/'>Shopi</NavItem>
+						<NavItem to='/' onClick={() => setSearchByCategory(null)}>
+							Shopi
+						</NavItem>
 					</li>
 					<li>
-						<NavItem to='/all' activeStyle={activeStyle}>
+						<NavItem
+							to='/all'
+							activeStyle={activeStyle}
+							onClick={() => setSearchByCategory(null)}
+						>
 							All
 						</NavItem>
 					</li>

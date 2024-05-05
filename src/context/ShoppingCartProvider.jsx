@@ -46,6 +46,10 @@ export function ShoppingCartProvider({ children }) {
 					product.title.toLowerCase().includes(searchByTitle.toLowerCase())
 			)
 		}
+
+		if (!searchType) {
+			return products
+		}
 	}
 
 	useEffect(() => {
@@ -66,7 +70,10 @@ export function ShoppingCartProvider({ children }) {
 			setFilteredProducts(
 				filterBy('BY_CATEGORY', products, searchByTitle, searchByCategory)
 			)
-		if (!searchByTitle && !searchByCategory) setFilteredProducts(products)
+		if (!searchByTitle && !searchByCategory)
+			setFilteredProducts(
+				filterBy(null, products, searchByTitle, searchByCategory)
+			)
 		// eslint-disable-next-line
 	}, [products, searchByTitle, searchByCategory])
 
@@ -94,6 +101,7 @@ export function ShoppingCartProvider({ children }) {
 
 	// Shopping Cart - Add Product to cart
 	const [cartProducts, setCartProducts] = useState([])
+
 	const addProductsToCart = (event, productData) => {
 		event.stopPropagation()
 		increment()
@@ -101,6 +109,7 @@ export function ShoppingCartProvider({ children }) {
 		openCheckoutSideMenu()
 		setCartProducts([...cartProducts, productData])
 	}
+
 	const deleteProductToCart = id => {
 		decrement()
 		const filteredProduct = cartProducts.filter(product => product.id !== id)
@@ -109,6 +118,7 @@ export function ShoppingCartProvider({ children }) {
 
 	// Shopping Cart - Checkout
 	const [order, setOrder] = useState([])
+
 	const handleCheckout = () => {
 		const orderToAdd = {
 			date: new Date(),
@@ -120,6 +130,7 @@ export function ShoppingCartProvider({ children }) {
 		setOrder([...order, orderToAdd])
 		setCount(0)
 		setCartProducts([])
+		setSearchByTitle(null)
 	}
 
 	return (

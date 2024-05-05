@@ -3,19 +3,15 @@ import { Layout, Card, ProductDetail } from '../../components'
 import { ShoppingCartContext } from '../../context'
 
 function Home() {
-	const { products, searchByTitle, setSearchByTitle, filteredProducts } =
-		useContext(ShoppingCartContext)
+	const { setSearchByTitle, filteredProducts } = useContext(ShoppingCartContext)
 
 	const renderView = () => {
-		const productsToRender =
-			searchByTitle?.length > 0 ? filteredProducts : products
-
-		if (productsToRender?.length > 0) {
-			return productsToRender.map(product => (
+		if (filteredProducts?.length > 0) {
+			return filteredProducts?.map(product => (
 				<Card key={product.id} {...product} />
 			))
 		} else {
-			return <p>No Results Found</p>
+			return <div>We don&apos;t have any products</div>
 		}
 	}
 
