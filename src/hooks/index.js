@@ -1,1 +1,1 @@
-import { default } from './useFetch'
+export { default } from './useFetch'
