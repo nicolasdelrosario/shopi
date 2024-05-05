@@ -1,16 +1,38 @@
-import { useFetch } from '../../hooks/useFetch'
+import { useContext } from 'react'
 import { Layout, Card, ProductDetail } from '../../components'
+import { ShoppingCartContext } from '../../context'
 
 function Home() {
-	const products = useFetch('https://fakestoreapi.com/products')
+	const { products, searchByTitle, setSearchByTitle, filteredProducts } =
+		useContext(ShoppingCartContext)
+
+	const renderView = () => {
+		const productsToRender =
+			searchByTitle?.length > 0 ? filteredProducts : products
+
+		if (productsToRender?.length > 0) {
+			return productsToRender.map(product => (
+				<Card key={product.id} {...product} />
+			))
+		} else {
+			return <p>No Results Found</p>
+		}
+	}
 
 	return (
 		<>
 			<Layout>
+				<div className='relative mb-4 flex w-80 items-center justify-center'>
+					<h1 className='text-3xl font-medium'>Lastest Products</h1>
+				</div>
+				<input
+					className='mb-8 w-80 rounded-lg border border-black p-4 focus:outline-none'
+					type='text'
+					placeholder='Search a product'
+					onChange={event => setSearchByTitle(event.target.value)}
+				/>
 				<div className='grid w-full max-w-screen-lg grid-cols-3 gap-6'>
-					{products?.map(product => (
-						<Card key={product.id} {...product} />
-					))}
+					{renderView()}
 				</div>
 				<ProductDetail />
 			</Layout>

@@ -1,10 +1,29 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { totalPrice } from '../utils'
+import { useFetch } from '../hooks/useFetch'
 
 export const ShoppingCartContext = createContext()
 
 export function ShoppingCartProvider({ children }) {
+	// Get Products
+	const products = useFetch('https://fakestoreapi.com/products')
+	const [filteredProducts, setFilteredProducts] = useState(null)
+
+	// Get Products By Title
+	const [searchByTitle, setSearchByTitle] = useState('')
+
+	const filteredItemsByTitle = (items, searchByTitle) => {
+		return items?.filter(item =>
+			item.title.toLowerCase().includes(searchByTitle.toLowerCase())
+		)
+	}
+
+	useEffect(() => {
+		if (searchByTitle)
+			setFilteredProducts(filteredItemsByTitle(products, searchByTitle))
+	}, [products, searchByTitle])
+
 	// Shooping Cart - Increment Quantity
 	const [count, setCount] = useState(0)
 	const increment = () => setCount(count + 1)
@@ -60,6 +79,10 @@ export function ShoppingCartProvider({ children }) {
 	return (
 		<ShoppingCartContext.Provider
 			value={{
+				products,
+				searchByTitle,
+				setSearchByTitle,
+				filteredProducts,
 				count,
 				setCount,
 				isProductDetailOpen,
